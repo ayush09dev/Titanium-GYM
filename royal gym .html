@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Royal Fitness & Gym Hub - Elite Dashboard</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Elite Premium Fitness Hub in Mahendragarh, Haryana. Asymmetric luxury athletic training dashboards and digital planning software." />
+    <meta name="author" content="Ayush" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Outfit (Luxury/Clean Display) & Space Mono (Quantifiable Data Metrics) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Custom Premium Stylesheets */
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #08080c;
+            color: #e2e8f0;
+        }
+
+        .font-mono-custom {
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* Gold Accent Color Variables & Themes */
+        .color-gold-accent {
+            color: #d4af37;
+        }
+        .bg-gold-accent {
+            background-color: #d4af37;
+        }
+        .border-gold-accent {
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        /* Glassmorphic Carbon Panel styling */
+        .carbon-panel {
+            background: linear-gradient(135deg, rgba(18, 19, 26, 0.9) 0%, rgba(10, 11, 15, 0.95) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.08);
+            box-shadow: 0 15px 45px 0 rgba(0, 0, 0, 0.7);
+        }
+
+        .carbon-card {
+            background: rgba(26, 27, 38, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .carbon-card:hover {
+            background: rgba(36, 38, 54, 0.7);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .carbon-card-active {
+            background: rgba(212, 175, 55, 0.04) !important;
+            border-color: #d4af37 !important;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.08) !important;
+        }
+
+        /* SVG Circular Gauge Animation Math */
+        .svg-circle-gauge {
+            transition: stroke-dashoffset 0.45s ease-out;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        /* Custom scrollbars inside layout panels */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #08080c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.2);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Top Navigation Header -->
+    <header class="w-full pt-6 pb-2 px-6 z-20">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl border border-gold-accent flex items-center justify-center font-extrabold text-white bg-gradient-to-br from-slate-900 to-black text-xl tracking-tight">
+                    <span class="color-gold-accent">R</span>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-black tracking-tight text-white uppercase">
+                        THE ROYAL <span class="color-gold-accent">FITNESS HUB</span>
+                    </h1>
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Elite Athlete System & Calculator</p>
+                </div>
+            </div>
+
+            <!-- Dashboard Sub-Tab Buttons -->
+            <div class="flex items-center gap-1 bg-neutral-900/80 p-1.5 rounded-xl border border-neutral-800">
+                <button onclick="switchTab('tracker')" class="tab-btn px-5 py-2 rounded-lg text-xs font-bold transition-all bg-neutral-800 text-white border border-neutral-700/50" id="btn-tracker">
+                    <i class="fa-solid fa-gauge mr-1.5"></i> Fitness Indicators
+                </button>
+                <button onclick="switchTab('calculator')" class="tab-btn px-5 py-2 rounded-lg text-xs font-bold transition-all text-gray-400 hover:text-white" id="btn-calculator">
+                    <i class="fa-solid fa-file-invoice-dollar mr-1.5"></i> Membership Builder
+                </button>
+                <button onclick="switchTab('location')" class="tab-btn px-5 py-2 rounded-lg text-xs font-bold transition-all text-gray-400 hover:text-white" id="btn-location">
+                    <i class="fa-solid fa-map-location-dot mr-1.5"></i> Location Hub
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Asymmetric Master Dashboard Layout Grid -->
+    <main class="flex-grow w-full max-w-7xl mx-auto px-6 py-4 z-10 flex flex-col justify-center">
+        <div class="w-full carbon-panel rounded-3xl p-6 md:p-8 min-h-[580px] grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch relative">
+            
+            <!-- LEFT PANEL: Dynamic Sub-Workspaces (7 Columns) -->
+            <div class="lg:col-span-7 flex flex-col justify-between">
+                
+                <!-- WORKSPACE 1: INDICATORS TRACKER (BMI & BMR) -->
+                <div id="tab-tracker-content" class="workspace-tab space-y-6">
+                    <div>
+                        <span class="text-xs font-bold tracking-widest color-gold-accent uppercase">Indicator Center</span>
+                        <h2 class="text-3xl font-extrabold text-white tracking-tight uppercase mt-1">Biometric Assessment</h2>
+                        <p class="text-gray-400 text-xs mt-1">Tune your parameters live to track body-mass metrics instantly.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Weight Slider Control -->
+                        <div class="bg-neutral-900/50 border border-neutral-800/80 rounded-2xl p-5 space-y-3">
+                            <div class="flex justify-between items-center text-xs text-gray-400">
+                                <span class="uppercase tracking-wider">Weight Parameter</span>
+                                <span class="font-mono-custom text-white text-sm"><strong id="weight-value">70</strong> kg</span>
+                            </div>
+                            <input type="range" id="slider-weight" min="30" max="150" value="70" oninput="runFitnessMath()" class="w-full accent-amber-500 bg-neutral-800 h-1 rounded-lg appearance-none">
+                            <p class="text-[10px] text-gray-500">Fine tune your dynamic structural bulk indices.</p>
+                        </div>
+
+                        <!-- Height Slider Control -->
+                        <div class="bg-neutral-900/50 border border-neutral-800/80 rounded-2xl p-5 space-y-3">
+                            <div class="flex justify-between items-center text-xs text-gray-400">
+                                <span class="uppercase tracking-wider">Height Parameter</span>
+                                <span class="font-mono-custom text-white text-sm"><strong id="height-value">175</strong> cm</span>
+                            </div>
+                            <input type="range" id="slider-height" min="120" max="220" value="175" oninput="runFitnessMath()" class="w-full accent-amber-500 bg-neutral-800 h-1 rounded-lg appearance-none">
+                            <p class="text-[10px] text-gray-500">Adjust spatial athletic height coefficients.</p>
+                        </div>
+                    </div>
+
+                    <!-- Calorie Target Modifiers -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-1.5">
+                            <label class="block text-xs text-gray-400 uppercase tracking-wider">Fitness Target Goal</label>
+                            <select id="select-goal" onchange="runFitnessMath()" class="w-full bg-neutral-900 border border-neutral-800 text-xs text-white rounded-xl p-3 outline-none focus:border-yellow-600">
+                                <option value="maintain">Hold Current Weight (Maintenance)</option>
+                                <option value="cut" selected>Body Recomposition & Fat Loss (Deficit)</option>
+                                <option value="bulk">Lean Muscle Mass Accumulation (Surplus)</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="block text-xs text-gray-400 uppercase tracking-wider">Weekly Routine Intensity</label>
+                            <select id="select-activity" onchange="runFitnessMath()" class="w-full bg-neutral-900 border border-neutral-800 text-xs text-white rounded-xl p-3 outline-none focus:border-yellow-600">
+                                <option value="sedentary">Sedentary (desk work, minimal activity)</option>
+                                <option value="moderate" selected>Active Athlete (resistance workout 3-5x/week)</option>
+                                <option value="elite">Elite Competitor (heavy training 6-7x/week)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WORKSPACE 2: MEMBERSHIP CUSTOM CALCULATOR -->
+                <div id="tab-calculator-content" class="workspace-tab hidden space-y-6">
+                    <div>
+                        <span class="text-xs font-bold tracking-widest color-gold-accent uppercase">Budget Builder</span>
+                        <h2 class="text-3xl font-extrabold text-white tracking-tight uppercase mt-1">Interactive Packages</h2>
+                        <p class="text-gray-400 text-xs mt-1">Choose your duration and select premium additions to configure your contract plan.</p>
+                    </div>
+
+                    <!-- Client Identification Form Details -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-wider text-gray-500 font-bold mb-1">Your Full Name</label>
+                            <input type="text" id="user-name" placeholder="Enter name" class="w-full bg-neutral-900/60 border border-neutral-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-yellow-600 transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-wider text-gray-500 font-bold mb-1">WhatsApp Mobile Number</label>
+                            <input type="tel" id="user-phone" placeholder="Enter phone number" class="w-full bg-neutral-900/60 border border-neutral-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-yellow-600 transition-colors">
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Card Grid generated by JS -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="gym-addons-grid">
+                        <!-- Addon option cards will be injected here -->
+                    </div>
+                </div>
+
+                <!-- WORKSPACE 3: GEOGRAPHICAL ADDRESS AND MAP INFO -->
+                <div id="tab-location-content" class="workspace-tab hidden space-y-6">
+                    <div>
+                        <span class="text-xs font-bold tracking-widest color-gold-accent uppercase">Location Terminal</span>
+                        <h2 class="text-3xl font-extrabold text-white tracking-tight uppercase mt-1">Find the Powerhouse</h2>
+                        <p class="text-gray-400 text-xs mt-1">Direct landmark routing and operating parameters.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                        <div class="md:col-span-5 space-y-4">
+                            <div class="flex items-start gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-neutral-900 border border-yellow-600/20 flex items-center justify-center text-yellow-500 text-sm mt-0.5">
+                                    <i class="fa-solid fa-map-location-dot"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white">Central Location:</h4>
+                                    <p class="text-xs text-gray-400 mt-1 leading-relaxed">
+                                        Opposite Government College Stadium, Nehru Nagar Road, Mahendragarh, Haryana
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-neutral-900 border border-yellow-600/20 flex items-center justify-center text-yellow-500 text-sm mt-0.5">
+                                    <i class="fa-solid fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white">Athletic Timing:</h4>
+                                    <p class="text-xs text-gray-400 mt-1 leading-relaxed">
+                                        05:00 AM - 10:00 AM & 04:00 PM - 09:00 PM (Monday to Saturday)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Graphical Vector Map Representation -->
+                        <div class="md:col-span-7 bg-neutral-950/80 rounded-2xl border border-neutral-800 p-5 flex flex-col justify-center items-center text-center">
+                            <div class="w-full h-40 rounded-xl border border-white/5 bg-neutral-900 relative overflow-hidden mb-4 flex flex-col justify-center items-center">
+                                <div class="absolute inset-0 bg-[radial-gradient(#ffffff03_1px,transparent_1px)] [background-size:12px_12px]"></div>
+                                <div class="z-10 relative text-center">
+                                    <div class="w-10 h-10 bg-yellow-500/10 rounded-full flex items-center justify-center text-yellow-500 text-lg animate-bounce mx-auto mb-2">
+                                        <i class="fa-solid fa-location-crosshairs"></i>
+                                    </div>
+                                    <span class="text-xs font-bold text-white tracking-widest uppercase block">Mahendragarh, Haryana</span>
+                                    <span class="text-[9px] text-gray-500 mt-0.5 block">College Stadium Sector Zone</span>
+                                </div>
+                            </div>
+                            <h4 class="text-xs font-bold text-white uppercase tracking-wider">Fast Landmark Navigation</h4>
+                            <p class="text-[10px] text-gray-400 mt-1">Conveniently situated right across the government stadium main entrance with parking available.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Static Asymmetric Bottom Footer Credits with Ayush Handle -->
+                <div class="pt-6 border-t border-neutral-800/80 mt-6 flex justify-between items-center text-[10px] text-gray-500 uppercase tracking-widest font-bold">
+                    <span>THE ROYAL GYM &copy; 2026</span>
+                    <span>Designed & Developed by <a href="https://x.com/AyushBuilds" target="_blank" class="color-gold-accent underline hover:text-white transition-all">Ayush (@AyushBuilds)</a></span>
+                </div>
+            </div>
+
+            <!-- RIGHT PANEL: Live Quantitative Metrics Dashboard (5 Columns) -->
+            <div class="lg:col-span-5 bg-neutral-950/70 border border-neutral-800/80 p-6 rounded-2xl flex flex-col justify-between items-center min-h-[460px]">
+                
+                <!-- METRICS SECTION 1: BMI CIRCULAR GAUGE MODULE (Shows up on Tracker Tab) -->
+                <div id="gauge-container-panel" class="w-full flex flex-col items-center justify-center py-6 space-y-6">
+                    <div class="text-center">
+                        <span class="text-[9px] font-bold text-gray-500 uppercase tracking-widest block">Biometric Coefficient</span>
+                        <h4 class="text-xs font-extrabold text-white uppercase tracking-wider mt-1">Dynamic Body-Mass Ring</h4>
+                    </div>
+
+                    <!-- Custom SVG Radial Dial representation -->
+                    <div class="relative w-44 h-44 flex items-center justify-center">
+                        <svg class="w-full h-full">
+                            <circle cx="88" cy="88" r="76" stroke="rgba(255,255,255,0.02)" stroke-width="10" fill="transparent" />
+                            <circle id="svg-gauge" cx="88" cy="88" r="76" stroke="#d4af37" stroke-width="10" fill="transparent" 
+                                    stroke-dasharray="477.5" stroke-dashoffset="477.5" class="svg-circle-gauge" />
+                        </svg>
+                        <div class="absolute text-center">
+                            <span class="text-xs text-gray-500 font-bold uppercase block tracking-widest">Score</span>
+                            <span class="text-4xl font-extrabold text-white font-mono-custom" id="bmi-display-value">22.9</span>
+                        </div>
+                    </div>
+
+                    <div class="text-center space-y-1">
+                        <span class="text-[10px] uppercase text-gray-500 font-bold tracking-widest block">Class Status</span>
+                        <h5 class="text-sm font-bold color-gold-accent font-mono-custom uppercase" id="bmi-status-label">Normal Range</h5>
+                    </div>
+                </div>
+
+                <!-- METRICS SECTION 2: MEMBERSHIP COST INVOICE (Shows up on Membership Tab) -->
+                <div id="invoice-container-panel" class="w-full hidden flex-col justify-between h-full space-y-6">
+                    <div class="text-center pb-4 border-b border-neutral-800/80">
+                        <span class="text-[9px] uppercase tracking-widest text-gray-500 font-bold">Estimated Cost Summary</span>
+                        <h4 class="text-4xl font-black text-white font-mono-custom mt-2">
+                            ₹<span id="invoice-net-cost">0</span>
+                        </h4>
+                        
+                        <!-- Student Discount switcher inside Dashboard -->
+                        <div class="mt-4 flex justify-center">
+                            <div class="inline-flex items-center gap-3 bg-yellow-950/30 px-3 py-1.5 rounded-xl border border-yellow-500/20">
+                                <span class="text-[10px] font-bold text-yellow-400 uppercase tracking-wider">
+                                    <i class="fa-solid fa-graduation-cap"></i> Student Discount (15% Off)
+                                </span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="toggle-student-rebate" class="sr-only peer" onchange="runMembershipCalculation()">
+                                    <div class="w-9 h-5 bg-neutral-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-neutral-500 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-yellow-600"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Selected Addon rows summary -->
+                    <div class="space-y-2 overflow-y-auto max-h-40 py-2" id="invoice-lines-ledger">
+                        <div class="text-center text-xs text-gray-600 py-6 font-mono-custom">
+                            No items active. Select options left.
+                        </div>
+                    </div>
+
+                    <!-- Calculations summary math tags -->
+                    <div class="pt-4 border-t border-neutral-800/80 space-y-1.5 text-xs">
+                        <div class="flex justify-between text-gray-500">
+                            <span>Standard Subtotal:</span>
+                            <span>₹<span id="invoice-base-cost">0</span></span>
+                        </div>
+                        <div class="flex justify-between text-yellow-500 font-bold hidden" id="invoice-discount-row">
+                            <span>Student Rebate (15%):</span>
+                            <span>-₹<span id="invoice-discount-val">0</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive CTA Button -->
+                <div class="w-full pt-4 border-t border-neutral-800/80">
+                    <button onclick="executeAction()" id="action-cta-button" class="w-full bg-gradient-to-r from-yellow-600 to-amber-700 hover:from-yellow-500 hover:to-amber-600 text-white font-extrabold py-3.5 px-4 rounded-xl transition-all duration-300 text-xs uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg shadow-yellow-600/10">
+                        <i class="fa-solid fa-calculator"></i> Customize Your Plan
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Checkout Structured Confirmation Modal Overlay -->
+    <div id="booking-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md hidden px-4">
+        <div class="carbon-panel rounded-2xl max-w-lg w-full p-6 border border-yellow-600/30 text-center relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-yellow-600/20 text-yellow-500 text-3xl">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-2 uppercase">Plan Structured Successfully!</h3>
+            <p class="text-gray-400 text-sm mb-4">
+                Your premium membership contract is structured. Click below to instantly send this schedule details directly to <span class="font-bold color-gold-accent">The Royal Fitness Support</span> on WhatsApp.
+            </p>
+
+            <div class="bg-neutral-950 rounded-xl p-4 text-left font-mono-custom text-[10px] text-yellow-400 border border-neutral-800 max-h-40 overflow-y-auto mb-5" id="invoice-txt-preview">
+                <!-- Message preview generated dynamically -->
+            </div>
+
+            <a id="whatsapp-link" href="#" target="_blank" class="block w-full bg-gradient-to-r from-emerald-600 to-green-700 hover:from-emerald-500 hover:to-green-600 text-white font-bold py-3.5 px-6 rounded-xl transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
+                <i class="fa-brands fa-whatsapp text-lg"></i> Dispatch Secure Contract via WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <!-- Alert Modal for Custom Warnings -->
+    <div id="alert-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md hidden px-4">
+        <div class="carbon-panel rounded-2xl max-w-sm w-full p-6 border border-red-500/30 text-center">
+            <div class="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-3 text-red-500 text-xl">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h4 class="text-base font-bold text-white mb-1">Incomplete Details</h4>
+            <p class="text-gray-400 text-xs mb-4" id="alert-message">Please fill in your basic identification details first!</p>
+            <button onclick="closeAlertModal()" class="w-full bg-neutral-800 hover:bg-neutral-700 text-white font-semibold py-2 px-4 rounded-xl text-xs transition-colors">
+                Understood
+            </button>
+        </div>
+    </div>
+
+    <script>
+        /* Workspace state manager */
+        let activeTab = 'tracker';
+
+        function switchTab(tabId) {
+            activeTab = tabId;
+
+            // Hide all tabs
+            document.querySelectorAll(".workspace-tab").forEach(tab => {
+                tab.classList.add("hidden");
+            });
+
+            // Show active tab
+            document.getElementById(`tab-${tabId}-content`).classList.remove("hidden");
+
+            // Reset tab button stylings
+            document.querySelectorAll(".tab-btn").forEach(btn => {
+                btn.className = "tab-btn px-5 py-2 rounded-lg text-xs font-bold transition-all text-gray-400 hover:text-white";
+            });
+
+            // Active button styling highlight
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            activeBtn.className = "tab-btn px-5 py-2 rounded-lg text-xs font-bold transition-all bg-neutral-800 text-white border border-neutral-700/50";
+
+            // Switch right dashboard panel layout based on chosen tab
+            const gaugePanel = document.getElementById("gauge-container-panel");
+            const invoicePanel = document.getElementById("invoice-container-panel");
+            const ctaBtn = document.getElementById("action-cta-button");
+
+            if (tabId === 'tracker') {
+                gaugePanel.classList.remove("hidden");
+                gaugePanel.classList.add("flex");
+                invoicePanel.classList.add("hidden");
+                invoicePanel.classList.remove("flex");
+
+                ctaBtn.innerHTML = `<i class="fa-solid fa-calculator"></i> Customize Your Plan`;
+            } else if (tabId === 'calculator') {
+                gaugePanel.classList.add("hidden");
+                gaugePanel.classList.remove("flex");
+                invoicePanel.classList.remove("hidden");
+                invoicePanel.classList.add("flex");
+
+                ctaBtn.innerHTML = `<i class="fa-solid fa-ticket"></i> Book Custom Spot Now`;
+            } else {
+                gaugePanel.classList.remove("hidden");
+                gaugePanel.classList.add("flex");
+                invoicePanel.classList.add("hidden");
+                invoicePanel.classList.remove("flex");
+
+                ctaBtn.innerHTML = `<i class="fa-solid fa-location-arrow"></i> Visit Gym Center`;
+            }
+        }
+
+        /* Biometric math engine */
+        function runFitnessMath() {
+            const weight = parseFloat(document.getElementById("slider-weight").value);
+            const height = parseFloat(document.getElementById("slider-height").value);
+
+            document.getElementById("weight-value").innerText = weight;
+            document.getElementById("height-value").innerText = height;
+
+            // BMI index computation
+            const bmiScore = weight / ((height / 100) * (height / 100));
+            document.getElementById("bmi-display-value").innerText = bmiScore.toFixed(1);
+
+            // Compute SVG circular dashoffset
+            // Total Circumference of circle with r=76 is 2 * PI * 76 = 477.5
+            const maxBmiLimit = 40;
+            const minBmiLimit = 15;
+            const percentage = Math.min(1, Math.max(0, (bmiScore - minBmiLimit) / (maxBmiLimit - minBmiLimit)));
+            const circumference = 477.5;
+            const dashoffset = circumference - (percentage * circumference);
+
+            const svgCircle = document.getElementById("svg-gauge");
+            svgCircle.style.strokeDashoffset = dashoffset;
+
+            // Category text logic
+            let categoryStr = "";
+            let colorStroke = "#d4af37";
+
+            if (bmiScore < 18.5) {
+                categoryStr = "Underweight / Lean Gain Goal";
+                colorStroke = "#ef4444"; // red
+            } else if (bmiScore >= 18.5 && bmiScore < 24.9) {
+                categoryStr = "Normal Range / Athletic Recomp";
+                colorStroke = "#10b981"; // emerald green
+            } else if (bmiScore >= 25 && bmiScore < 29.9) {
+                categoryStr = "Overweight / Balanced Training";
+                colorStroke = "#f59e0b"; // amber
+            } else {
+                categoryStr = "Obese / Active Caloric Deficit";
+                colorStroke = "#b91c1c"; // deep red
+            }
+
+            document.getElementById("bmi-status-label").innerText = categoryStr;
+            svgCircle.style.stroke = colorStroke;
+        }
+
+        /* Membership Addon package list configuration */
+        const packagesCatalogList = [
+            {
+                id: "plan-monthly",
+                title: "1-Month Elite Access",
+                price: 1500,
+                desc: "Unlimited cardio floor & heavy powerlifting grids.",
+                icon: "fa-solid fa-dumbbell"
+            },
+            {
+                id: "plan-annual",
+                title: "Annual Complete Plan",
+                price: 9900,
+                desc: "Unbeatable yearly packages with regular fitness audits.",
+                icon: "fa-solid fa-calendar-days"
+            },
+            {
+                id: "addon-trainer",
+                title: "Personal Coaching Add-On",
+                price: 2500,
+                desc: "1-on-1 athletic guidance with dynamic dietary routines.",
+                icon: "fa-solid fa-user-ninja"
+            },
+            {
+                id: "addon-diet",
+                title: "Branded Supplement Pack",
+                price: 1200,
+                desc: "High quality micro-filtered muscle fuels or mass gainers.",
+                icon: "fa-solid fa-bottle-droplet"
+            }
+        ];
+
+        let selectedAddonsSet = new Set();
+
+        /* Render package cards dynamically in panel */
+        function buildPackageCards() {
+            const grid = document.getElementById("gym-addons-grid");
+            grid.innerHTML = "";
+
+            packagesCatalogList.forEach(pkg => {
+                const card = document.createElement("div");
+                card.id = `addon-tile-${pkg.id}`;
+                card.className = "carbon-card rounded-xl p-4 cursor-pointer flex flex-col justify-between border border-neutral-800/80";
+                card.onclick = () => toggleAddonSelection(pkg.id);
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="w-8 h-8 rounded-lg bg-yellow-500/10 flex items-center justify-center text-yellow-500 text-xs">
+                                <i class="${pkg.icon}"></i>
+                            </div>
+                            <span class="text-xs font-bold text-white bg-neutral-900 px-2 py-0.5 rounded border border-neutral-800">₹${pkg.price}</span>
+                        </div>
+                        <h4 class="font-bold text-xs text-white mb-1">${pkg.title}</h4>
+                        <p class="text-[10px] text-gray-400 leading-relaxed">${pkg.desc}</p>
+                    </div>
+                    <div class="text-[9px] text-gray-500 flex items-center gap-1 mt-3 addon-indicator">
+                        <i class="fa-regular fa-square"></i> Select Option
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        /* Toggle package choice */
+        function toggleAddonSelection(id) {
+            const card = document.getElementById(`addon-tile-${id}`);
+            const indicator = card.querySelector(".addon-indicator");
+
+            if (selectedAddonsSet.has(id)) {
+                selectedAddonsSet.delete(id);
+                card.classList.remove("carbon-card-active");
+                indicator.innerHTML = `<i class="fa-regular fa-square"></i> Select Option`;
+                indicator.className = "text-[9px] text-gray-500 flex items-center gap-1 mt-3 addon-indicator";
+            } else {
+                selectedAddonsSet.add(id);
+                card.classList.add("carbon-card-active");
+                indicator.innerHTML = `<i class="fa-solid fa-square-check color-gold-accent"></i> Added to booking`;
+                indicator.className = "text-[9px] color-gold-accent font-bold flex items-center gap-1 mt-3 addon-indicator";
+            }
+            runMembershipCalculation();
+        }
+
+        /* Dynamic Cost calculations and Invoice rendering */
+        function runMembershipCalculation() {
+            let baseTotalValue = 0;
+            const ledger = document.getElementById("invoice-lines-ledger");
+            ledger.innerHTML = "";
+
+            if (selectedAddonsSet.size === 0) {
+                const emptyMsg = document.createElement("div");
+                emptyMsg.className = "text-center text-xs text-gray-600 py-6 font-mono-custom";
+                emptyMsg.innerText = "No packages selected yet. Add options on the left.";
+                ledger.appendChild(emptyMsg);
+
+                document.getElementById("invoice-base-cost").innerText = "0";
+                document.getElementById("invoice-net-cost").innerText = "0";
+                document.getElementById("invoice-discount-row").classList.add("hidden");
+                return;
+            }
+
+            selectedAddonsSet.forEach(addonId => {
+                const item = packagesCatalogList.find(p => p.id === addonId);
+                if (!item) return;
+
+                baseTotalValue += item.price;
+
+                const row = document.createElement("div");
+                row.className = "flex justify-between items-center bg-neutral-900/60 p-2.5 rounded-lg border border-neutral-800 text-[11px]";
+                row.innerHTML = `
+                    <span class="text-gray-300 font-medium font-mono-custom"><i class="fa-solid fa-circle text-[4px] color-gold-accent mr-2"></i> ${item.title}</span>
+                    <span class="font-bold text-white font-mono-custom">₹${item.price}</span>
+                `;
+                ledger.appendChild(row);
+            });
+
+            document.getElementById("invoice-base-cost").innerText = baseTotalValue;
+
+            // Check student discount state
+            const isStudentChecked = document.getElementById("toggle-student-rebate").checked;
+            let finalCost = baseTotalValue;
+
+            if (isStudentChecked && baseTotalValue > 0) {
+                const discount = Math.round(baseTotalValue * 0.15);
+                finalCost = baseTotalValue - discount;
+
+                document.getElementById("invoice-discount-val").innerText = discount;
+                document.getElementById("invoice-discount-row").classList.remove("hidden");
+            } else {
+                document.getElementById("invoice-discount-row").classList.add("hidden");
+            }
+
+            document.getElementById("invoice-net-cost").innerText = finalCost;
+        }
+
+        /* CTA dynamic click action dispatcher */
+        function executeAction() {
+            if (activeTab === 'tracker') {
+                switchTab('calculator');
+            } else if (activeTab === 'calculator') {
+                submitGymOrder();
+            } else {
+                // Geo navigation trigger
+                window.open("https://api.whatsapp.com/send?text=Hello%20Royal%20Fitness%20Support!%20I%20want%20to%20book%20a%20personal%20trial%20session.", "_blank");
+            }
+        }
+
+        /* Structured invoice generation & WhatsApp Dispatch */
+        function submitGymOrder() {
+            const userNameVal = document.getElementById("user-name").value.trim();
+            const userPhoneVal = document.getElementById("user-phone").value.trim();
+            const isStudent = document.getElementById("toggle-student-rebate").checked;
+
+            if (!userNameVal || !userPhoneVal) {
+                showModalAlert("Please fill in your Full Name and Mobile number first so we can prepare your custom spot booking!");
+                return;
+            }
+
+            if (selectedAddonsSet.size === 0) {
+                showModalAlert("Please choose at least one plan or package card option from the builder left.");
+                return;
+            }
+
+            let addonsListStr = "";
+            selectedAddonsSet.forEach(addonId => {
+                const item = packagesCatalogList.find(p => p.id === addonId);
+                if (item) {
+                    addonsListStr += `- ${item.title} (₹${item.price})\n`;
+                }
+            });
+
+            const basePriceNum = parseInt(document.getElementById("invoice-base-cost").innerText || "0", 10);
+            const netPriceNum = parseInt(document.getElementById("invoice-net-cost").innerText || "0", 10);
+            const savedValue = Math.max(0, basePriceNum - netPriceNum);
+            const dealStatus = isStudent ? `Student Discount: 15% (Saved ₹${savedValue})` : 'Standard Price';
+
+            const messageText = `⚡ THE ROYAL FITNESS HUB MEMBERSHIP ORDER ⚡
+-----------------------------------------
+Athlete Name: ${userNameVal}
+Contact Phone: ${userPhoneVal}
+Schedule Mode: PREMIUM ATHLETE DIRECT ACCESS
+
+CHOSEN TRAINING MODULES:
+${addonsListStr}
+-----------------------------------------
+Standard Subtotal: ₹${basePriceNum}
+Applied Rebate Deal: ${dealStatus}
+TOTAL NET PAYABLE: ₹${netPriceNum}
+
+LOCATION: Opposite Govt College Stadium, Nehru Nagar Road, Mahendragarh, Haryana
+-----------------------------------------
+*Let's execute my athletic trial slot schedule on first priority!*`;
+
+            document.getElementById("invoice-txt-preview").innerText = messageText;
+
+            const encodedVal = encodeURIComponent(messageText);
+            const urlLink = `https://api.whatsapp.com/send?text=${encodedVal}`;
+            document.getElementById("whatsapp-link").href = urlLink;
+
+            document.getElementById("booking-modal").classList.remove("hidden");
+        }
+
+        function closeModal() {
+            document.getElementById("booking-modal").classList.add("hidden");
+        }
+
+        function showModalAlert(msg) {
+            document.getElementById("alert-message").innerText = msg;
+            document.getElementById("alert-modal").classList.remove("hidden");
+        }
+
+        function closeAlertModal() {
+            document.getElementById("alert-modal").classList.add("hidden");
+        }
+
+        /* Page Load initialization */
+        window.addEventListener('DOMContentLoaded', () => {
+            buildPackageCards();
+            runFitnessMath();
+            runMembershipCalculation();
+        });
+    </script>
+</body>
+</html>
